@@ -4,7 +4,7 @@
 
   function toggleTheme() {
     theme = theme === "light" ? "dark" : "light";
-    document.body.dataset.theme = theme; // Update data-theme attribute
+    document.body.dataset.theme = theme;
   }
 </script>
 
@@ -13,4 +13,3 @@
   <button on:click={toggleTheme}>Toggle Theme</button>
   <CountdownTimer />
 </main>
-

@@ -43,14 +43,24 @@
   }
 
   .time {
-    display: flex;
-    gap: 2rem;
-    font-size: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem; /* Add spacing */
+    font-size: 1.2rem;
     color: hsl(var(--accent));
+    text-align: center;
+  }
+
+ 
+  @media (min-width: 768px) {
+    .time {
+      grid-template-columns: repeat(4, 1fr);
+      font-size: 1.5rem;
+    }
   }
 
   .time p {
-    text-align: center;
+    font-size: 1rem;
     background: rgba(255, 255, 255, 0.1);
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
