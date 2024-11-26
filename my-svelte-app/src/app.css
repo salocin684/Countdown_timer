@@ -1,5 +1,5 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Poppins", sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -11,39 +11,48 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --primary: 220 90% 50%;
+  --secondary: 240 85% 30%;
+  --accent: 50 100% 50%;
+  --background: 210 20% 98%;
+  --foreground: 210 30% 20%;
+}
+
+[data-theme="dark"] {
+  --primary: 220 90% 60%;
+  --secondary: 240 80% 40%;
+  --accent: 50 100% 60%;
+  --background: 210 30% 10%;
+  --foreground: 210 30% 90%;
+}
+
+body {
+  background: linear-gradient(135deg, hsl(var(--primary)) 20%, hsl(var(--secondary)) 80%);
+  color: hsl(var(--foreground));
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#app {
+  text-align: center;
+  background: rgba(0, 0, 0, 0.7); /* Semi-transparent card */
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: hsl(var(--primary));
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-.card {
-  padding: 2em;
-}
-
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  color: hsl(var(--secondary));
 }
 
 button {
@@ -53,27 +62,38 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: hsl(var(--foreground));
+  color: hsl(var(--background));
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: border-color 0.25s, background-color 0.25s, color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  border-color: hsl(var(--primary));
+  background-color: hsl(var(--primary));
+  color: hsl(var(--background));
 }
 
-@media (prefers-color-scheme: light) {
+@media (prefers-color-scheme: dark) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
   }
   button {
-    background-color: #f9f9f9;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
   }
+}
+
+.time p {
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.time p:hover {
+  transform: scale(1.1);
+  background-color: hsl(var(--primary));
+}
+
+h1, .timer h1 {
+  color: hsl(var(--accent));
+  text-shadow: 0 0 10px hsl(var(--accent)), 0 0 20px hsl(var(--accent));
 }
