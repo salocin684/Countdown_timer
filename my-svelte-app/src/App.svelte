@@ -9,7 +9,7 @@
 </script>
 
 <main>
-  <h1>Brevis AI release</h1>
+  <h1>Brevis AI Release</h1>
   <button on:click={toggleTheme}>Toggle Theme</button>
   <CountdownTimer />
 </main>

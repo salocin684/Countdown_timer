@@ -1,21 +1,30 @@
 <script>
   import { onMount } from "svelte";
 
-  let targetDate = new Date("2024-11-30T23:59:59").getTime();
-  let timeLeft = {};
+  let targetDate = new Date("2024-12-04T23:59:59").getTime();
+  let timeDisplay = "";
+  let isAfterTarget = false;
 
   const calculateTimeLeft = () => {
     const now = new Date().getTime();
     const difference = targetDate - now;
 
-    timeLeft = difference > 0
-      ? {
-          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-          minutes: Math.floor((difference / (1000 * 60)) % 60),
-          seconds: Math.floor((difference / 1000) % 60),
-        }
-      : { days: 0, hours: 0, minutes: 0, seconds: 0 };
+    let totalSeconds = Math.abs(difference) / 1000; // Absolute tijd in seconden
+    const days = Math.floor(totalSeconds / (24 * 3600));
+    totalSeconds %= 24 * 3600;
+    const hours = Math.floor(totalSeconds / 3600);
+    totalSeconds %= 3600;
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = Math.floor(totalSeconds % 60);
+
+    isAfterTarget = difference < 0;
+
+    // Maak de tijdweergave
+    if (days > 0) {
+      timeDisplay = `${isAfterTarget ? "T+" : "T-"}${days}:${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    } else {
+      timeDisplay = `${isAfterTarget ? "T+" : "T-"}${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    }
   };
 
   onMount(() => {
@@ -25,45 +34,29 @@
   });
 </script>
 
-<div class="time">
-  <p><i class="fas fa-calendar-day"></i> {timeLeft.days} Days</p>
-  <p><i class="fas fa-clock"></i> {timeLeft.hours} Hours</p>
-  <p><i class="fas fa-stopwatch"></i> {timeLeft.minutes} Minutes</p>
-  <p><i class="fas fa-hourglass-end"></i> {timeLeft.seconds} Seconds</p>
+<div id="app">
+  <h1>{timeDisplay}</h1>
 </div>
 
 <style>
-  .timer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-    text-transform: uppercase;
-    font-weight: bold;
-  }
-
-  .time {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem; /* Add spacing */
-    font-size: 1.2rem;
-    color: hsl(var(--accent));
+  #app {
     text-align: center;
+    padding: 2rem;
+    border-radius: 1rem;
+    background: rgba(0, 0, 0, 0.7);
+    color: hsl(var(--foreground));
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   }
 
- 
+  h1 {
+    font-size: 2rem;
+    color: hsl(var(--accent));
+    text-shadow: 0 0 10px hsl(var(--accent)), 0 0 20px hsl(var(--accent));
+  }
+
   @media (min-width: 768px) {
-    .time {
-      grid-template-columns: repeat(4, 1fr);
-      font-size: 1.5rem;
+    h1 {
+      font-size: 3rem;
     }
-  }
-
-  .time p {
-    font-size: 1rem;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   }
 </style>
